@@ -29,7 +29,7 @@ filelock==3.17.0
 Flask==2.2.2
 Flask-Cors==5.0.0
 Flask-SocketIO==5.5.1
-flatbuffers==20181003210633
+flatbuffers==25.1.24
 fonttools==4.56.0
 fsspec==2025.2.0
 gpiozero==2.0.1
