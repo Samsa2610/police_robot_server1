@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Face Recognition Notifications</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            color: #343a40;
+        }
+        .notification-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
+            justify-content: center;
+            padding: 20px;
+        }
+        .notification {
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            background: #ffffff;
+            box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease-in-out, transform 0.3s;
+        }
+        .notification img {
+            border-radius: 8px;
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            margin: 10px;
+        }
+        .recognized {
+            background: #ffcccc;
+            transform: scale(1.05);
+        }
+        .suspect-info {
+            font-weight: bold;
+            color: #343a40;
+        }
+    </style>
+    <script>
+        async function loadNotifications() {
+            let response = await fetch("/notifications");
+            let data = await response.json();
+            let container = document.getElementById("notifications");
+
+            container.innerHTML = ""; // Clear previous notifications
+
+            data.recognized_suspects.forEach(suspect => {
+                let suspectDiv = document.createElement("div");
+                suspectDiv.className = "notification";
+                suspectDiv.id = `suspect-${suspect.id}`;
+
+                // If recognized, change background color
+                if (suspect.detected_image) {
+                    suspectDiv.classList.add("recognized");
+                }
+
+                suspectDiv.innerHTML = `
+                    <h3>${suspect.name}</h3>
+                    <p class="suspect-info">ID: ${suspect.id_number} | ${suspect.nationality}</p>
+                    <div>
+                        <img src="data:image/jpeg;base64,${suspect.image}" alt="Stored Image">
+                        <img id="detected-${suspect.id}" src="data:image/jpeg;base64,${suspect.detected_image}" alt="Detected Image">
+                    </div>
+                `;
+                container.appendChild(suspectDiv);
+            });
+        }
+
+        setInterval(loadNotifications, 3000);
+
+        window.onload = () => {
+            loadNotifications();
+        };
+    </script>
+</head>
+<body>
+    <h1>Real-Time Suspect Recognition</h1>
+    <div class="notification-container" id="notifications"></div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
