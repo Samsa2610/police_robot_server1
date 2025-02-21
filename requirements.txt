@@ -90,7 +90,6 @@ ptyprocess==0.7.0
 py-cpuinfo==9.0.0
 pycairo==1.20.1
 pycryptodomex==3.11.0
-pygame==2.1.2
 Pygments==2.14.0
 PyGObject==3.42.2
 pyinotify==0.9.6
