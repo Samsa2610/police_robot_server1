@@ -1,3 +1,4 @@
+pip==25.0.1
 asgiref==3.6.0
 astroid==2.14.2
 asttokens==2.2.1
